@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "@ant-design/icons": "latest",
+    "antd": "4.0.3",
+    "ramda": "0.27.0",
+    "react": "latest",
+    "react-dom": "latest",
+    "uuid": "7.0.2"
+  },
+  "keywords": [],
+  "name": "coding-block-gui",
+  "description": null,
+  "version": "0.0.5",
+  "devDependencies": {
+    "react-scripts": "1.0.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}

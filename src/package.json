@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "@ant-design/icons": "latest",
+    "antd": "4.0.3",
+    "ramda": "0.27.0",
+    "react": "latest",
+    "react-dom": "latest",
+    "uuid": "7.0.2"
+  },
+  "keywords": [],
+  "name": "coding-block-gui",
+  "description": ""
+}
