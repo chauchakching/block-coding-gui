@@ -54,7 +54,7 @@ export function nodeTreeToPathKeyPairs(base = [], nodes) {
   return R.pipe(
     R.addIndex(R.map)(({ key, children = [] }, index) => [
       [key, [...base, index]],
-      ...nodeTreeToPathKeyPairs([...base, index], children),
+      ...nodeTreeToPathKeyPairs([...base, index, 'children'], children),
     ]),
     R.unnest,
   )(nodes)
