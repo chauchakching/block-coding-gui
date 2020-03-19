@@ -85,7 +85,7 @@ const App = () => {
         }
       })
     }
-    const data = [...nodeTree]
+    const data = R.clone(nodeTree)
 
     let isValidMove = true
 
