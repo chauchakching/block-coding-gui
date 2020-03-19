@@ -7,7 +7,7 @@ const ForLoopBlock = ({ nodeKey, nodeData = { count: 2 }, dispatch }) => {
   const [count, setCount] = useState(nodeData.count)
   const onChange = useCallback(
     e => {
-      const newCount = e.target.input
+      const newCount = e.target.value
       setCount(newCount)
       dispatch({
         type: ACTION.UPDATE_NODE_DATA,

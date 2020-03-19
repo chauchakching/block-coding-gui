@@ -22,6 +22,13 @@ const initialNoteTree = [
     key: uuidv4(),
     instruction: INSTRUCTION.FOR_LOOP,
     nodeData: { count: 5 },
+    children: [
+      {
+        key: uuidv4(),
+        instruction: INSTRUCTION.HELLO_WORLD,
+        nodeData: { text: 'hello' },
+      },
+    ],
   },
 ]
 
