@@ -1,10 +1,4 @@
-import React, {
-  Fragment,
-  useState,
-  useCallback,
-  useReducer,
-  useEffect,
-} from 'react'
+import React, { Fragment, useState, useCallback, useReducer } from 'react'
 import { Tree } from 'antd'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -15,22 +9,43 @@ import { nodeTree2rTree } from './helper'
 
 /**
  * TODO:
- * - add second instruction
- * - execute the 2 instructions in the tree
- * - add button for insert/remove instructions
- *
- * - add type 2 instruction
+ * - for loop !!!
  */
 
-const AddNewBlock = () => (
-  <button onClick={() => console.log('add new block')}>Add new block</button>
-)
+const initialNoteTree = [
+  {
+    key: uuidv4(),
+    instruction: INSTRUCTION.HELLO_WORLD,
+    nodeData: { text: 'hey there' },
+  },
+  {
+    key: uuidv4(),
+    instruction: INSTRUCTION.FOR_LOOP,
+    nodeData: { count: 5 },
+  },
+]
 
-const initialNoteTree = [{
-key: uuidv4(),
-instruction: INSTRUCTION.HELLO_WORLD,
-nodeData: {text: 'hey there'}
-}]
+const runNodesInstructions = nodeTree => {
+  nodeTree.forEach(({ instruction, nodeData, children = [] }) => {
+    console.log(
+      `--- instruction: ${instruction} ${JSON.stringify(nodeData)} ---`,
+    )
+    switch (instruction) {
+      case INSTRUCTION.HELLO_WORLD:
+        console.log(nodeData.text)
+        break
+
+      case INSTRUCTION.FOR_LOOP:
+        for (let i = 0; i < nodeData.count; i++) {
+          runNodesInstructions(children)
+        }
+        break
+
+      default:
+        console.log('!!! unknown instruction !!!', instruction)
+    }
+  })
+}
 
 const App = () => {
   const [nodeTree, dispatch] = useReducer(reducer, initialNoteTree)
@@ -40,17 +55,7 @@ const App = () => {
   const run = useCallback(() => {
     console.clear()
 
-    nodeTree.forEach(({instruction, nodeData}) => {
-      console.log(`--- instruction: ${instruction} ---`)
-      switch (instruction) {
-        case INSTRUCTION.HELLO_WORLD:
-          console.log(nodeData.text)
-          break
-
-        default:
-          console.log('!!! unknown instruction !!!', instruction)
-      }
-    })
+    runNodesInstructions(nodeTree)
   }, [nodeTree])
 
   const onDragEnter = info => {
@@ -134,7 +139,7 @@ const App = () => {
         blockNode
         onDragEnter={onDragEnter}
         onDrop={onDrop}
-        treeData={nodeTree2rTree({nodeTree, dispatch})}
+        treeData={nodeTree2rTree({ nodeTree, dispatch })}
       />
     </Fragment>
   )
