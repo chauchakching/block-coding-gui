@@ -9,7 +9,7 @@ import { nodeTree2rTree } from './helper'
 
 /**
  * TODO:
- * - for loop !!!
+ * - drawing !
  */
 
 const initialNoteTree = [

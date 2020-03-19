@@ -1,9 +1,7 @@
 import React from 'react'
 import * as R from 'ramda'
 
-import INSTRUCTION from './instructions'
-import HelloWorldBlock from './components/HelloWorldBlock'
-import ForLoopBlock from './components/ForLoopBlock'
+import { instructionComponents } from './instructions'
 
 export const nodeTree2rTree = ({ nodeTree, dispatch }) =>
   nodeTree.map(val => {
@@ -12,14 +10,10 @@ export const nodeTree2rTree = ({ nodeTree, dispatch }) =>
       nodeKey: val.key,
       ...val,
     }
+    const Comp = instructionComponents[val.instruction]
     return {
       ...val,
-      title:
-        val.instruction === INSTRUCTION.HELLO_WORLD ? (
-          <HelloWorldBlock {...props} />
-        ) : val.instruction === INSTRUCTION.FOR_LOOP ? (
-          <ForLoopBlock {...props} />
-        ) : null,
+      title: Comp ? <Comp {...props} /> : null,
       children: nodeTree2rTree({ nodeTree: val.children || [], dispatch }),
     }
   })
