@@ -87,6 +87,8 @@ const App = () => {
     }
     const data = [...nodeTree]
 
+    let isValidMove = true
+
     // Find dragObject
     let dragObj
     loop(data, dragKey, (item, index, arr) => {
@@ -97,6 +99,9 @@ const App = () => {
     if (!info.dropToGap) {
       // Drop on the content
       loop(data, dropKey, item => {
+        if (item.instruction !== INSTRUCTION.FOR_LOOP) {
+          isValidMove = false
+        }
         item.children = item.children || []
         // where to insert 示例添加到尾部，可以是随意位置
         item.children.push(dragObj)
@@ -125,6 +130,7 @@ const App = () => {
       }
     }
 
+    if (!isValidMove) return
     dispatch({ type: ACTION.MOVE, data })
   }
 
