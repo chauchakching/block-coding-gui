@@ -1,10 +1,11 @@
 import React, { Fragment, useState, useCallback, useReducer } from 'react'
+import * as R from 'ramda'
 import { Tree } from 'antd'
 import { v4 as uuidv4 } from 'uuid'
 
 import ACTION from './actions'
 import reducer from './reducer'
-import INSTRUCTION from './instructions'
+import INSTRUCTION, { instructionsSpec } from './instructions'
 import { nodeTree2rTree } from './helper'
 
 /**
@@ -34,23 +35,15 @@ const initialNoteTree = [
 
 const runNodesInstructions = nodeTree => {
   nodeTree.forEach(({ instruction, nodeData, children = [] }) => {
-    console.log(
+    console.debug(
       `--- instruction: ${instruction} ${JSON.stringify(nodeData)} ---`,
     )
-    switch (instruction) {
-      case INSTRUCTION.HELLO_WORLD:
-        console.log(nodeData.text)
-        break
-
-      case INSTRUCTION.FOR_LOOP:
-        for (let i = 0; i < nodeData.count; i++) {
-          runNodesInstructions(children)
-        }
-        break
-
-      default:
-        console.log('!!! unknown instruction !!!', instruction)
+    const run = R.path([instruction, 'run'], instructionsSpec)
+    if (!run) {
+      throw Error('no command for instruction', instruction)
     }
+
+    run({ nodeData, children, runNodes: runNodesInstructions })
   })
 }
 

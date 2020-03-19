@@ -1,7 +1,7 @@
 import React from 'react'
 import * as R from 'ramda'
 
-import { instructionComponents } from './instructions'
+import { instructionsSpec } from './instructions'
 
 export const nodeTree2rTree = ({ nodeTree, dispatch }) =>
   nodeTree.map(val => {
@@ -10,7 +10,7 @@ export const nodeTree2rTree = ({ nodeTree, dispatch }) =>
       nodeKey: val.key,
       ...val,
     }
-    const Comp = instructionComponents[val.instruction]
+    const Comp = R.path([val.instruction, 'component'], instructionsSpec)
     return {
       ...val,
       title: Comp ? <Comp {...props} /> : null,
